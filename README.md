@@ -1,5 +1,5 @@
 # Directory_size and Memory allocation
-## my_du - Directory Size Calculator for Linux
+## Directory space usage
 
 `my_du` is a customized version of the `du` command, tailored for Linux systems. It provides the size of a directory, including its files, sub-directories, the directory itself, and the symbolic link file size, if any.
 
