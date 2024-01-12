@@ -78,8 +78,10 @@ This project implements a custom dynamic memory allocation library, offering fun
    - Ensures that free memory chunks are appropriately sized to serve future memory allocation requests.
    -  See the accompanying image for a visual representation of the metadata maintenance corresponding to the allocated and free memory chunks.
 
-   ```markdown
-   ![Metadata Illustration](metadata_illustration.png)
+   
+   ![Metadata Illustration](metadata.png)
+   
+   *Caption: Example to illustrate the metadata maintenance corresponding to the allocated and free memory chunks.*
 
 ### How to Use
 
@@ -105,6 +107,7 @@ This project implements a custom dynamic memory allocation library, offering fun
      // Use the allocated memory
      memfree(ptr); // Free the allocated memory
      ```
+
 
 ### Error Handling
 
