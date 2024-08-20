@@ -16,14 +16,17 @@ long long get_directory_size(char * directory_path){
 	DIR* dir_stream = opendir(directory_path);
 	if(dir_stream){
 		while((entry = readdir(dir_stream)) != NULL){
+			//For the hidden files which says present and prev
 			if (strcmp(entry->d_name, ".") == 0 || strcmp(entry->d_name, "..") == 0) {
                 		continue;
             		}
+			//if it is a directory again
 			else if(entry->d_type == DT_DIR){
 				char sub_directory_path[512];
                                 snprintf(sub_directory_path, sizeof(sub_directory_path), "%s/%s", directory_path, entry->d_name);
                                 size += get_directory_size(sub_directory_path);
 			}
+			//if it is a symbolic link
 			else if(entry -> d_type == DT_LNK){
 				char symbolic_file_path[512];
                                 snprintf(symbolic_file_path, sizeof(symbolic_file_path), "%s/%s", directory_path, entry->d_name);
@@ -98,7 +101,7 @@ int main(int argc, char * argv[]) {
 					printf("fork was unsuccessful\n");
                         		exit(-1);
 				}
-				else if(pid == 0){
+				else if(pid == 0){	//child process
 					long long size = 0;
 					char sub_directory_path[512]; // Adjust buffer size as needed
                 			snprintf(sub_directory_path, sizeof(sub_directory_path), "%s/%s", directory_path, entry->d_name);
@@ -106,7 +109,12 @@ int main(int argc, char * argv[]) {
                				write(pipefd[1], &size, sizeof(size));
 					exit(EXIT_SUCCESS);	
 				}
-				else{
+				else{	//parent process
+					//I think this read should be after the wait call because what if 
+					//child does not executed 1st and parent does 1st, 
+					// There is nothing to read from the pipe as child is still yet to 
+					// execute, so wait should be present before read system call
+					// even chatgpt says so...
 					read(pipefd[0], &child_size, sizeof(child_size));
 					size += child_size;
 					printf("%s %lld\n", entry -> d_name, child_size);
