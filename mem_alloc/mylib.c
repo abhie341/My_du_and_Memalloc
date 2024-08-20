@@ -216,38 +216,9 @@ int memfree(unsigned long *ptr) {
         }
 ///////////////////////////////////////////////////////
 	if(left != NULL && right != NULL){
-	/*
-			new_size = *ptr + *left + *right;
-			if(*((unsigned long *)*(left + 2) + 1) == (unsigned long)left){
-                                *((unsigned long *)*(left + 2) + 1) = *(left + 1);
-                        }
-			else if(*((unsigned long *)*(right + 2) + 1) == (unsigned long)right){
-                                *((unsigned long *)*(right + 2) + 1) = *(right + 1);
-                        }
-			*(left) = new_size;
-			if(*(head + 1) == (unsigned long) left){
-				*(head + 1) = *(left + 1);
-			}
-			if(*(head + 1) == (unsigned long) right){
-                                *(head + 1) = *(right + 1);
-                        }
-                                
-                        *(head + 2) = (unsigned long)left;
-			if((head == left && *(head + 1) == (unsigned long)right) || (head == right && *(right + 1) != (unsigned long)left)){
-				*(left + 1) = *(right + 1);
-			}
-			else if(head != left && head != right){
-				*(left + 1) = (unsigned long)head;
-			}
-
-                        *(left + 2) = (unsigned long)(&head);
-                        head = left;
-          */
           		if((*(left+2) == &head) && (*(left+1) == NULL))
 			{
 				*left = *left + *ptr;
-				//*(left+1) = NULL;
-				//*(left+2) = &head;
 			}
 			else if(*(left+1) == NULL)
 			{
@@ -280,24 +251,13 @@ int memfree(unsigned long *ptr) {
 			{
 				*ptr = *ptr + *right;
 				*((unsigned long *)*(right+2)+1) = NULL;
-				/*
-				*(ptr+2) = &head;
-				*(ptr+1) = head;
-				*(head+2) = ptr;
-				head = ptr;
-				*/
+				
 			}
 			else
 			{
 				*ptr = *ptr + *right;
 				*((unsigned long *)*(right+2)+1) = *(right+1);
 				*((unsigned long *)*(right+1)+2) = *(right+2);
-				/*
-				*(ptr+2) = &(head);
-				*(ptr+1) = head;
-				*(head+2) = ptr;
-				head = ptr;
-				*/
 				
 			}
 			
@@ -305,22 +265,7 @@ int memfree(unsigned long *ptr) {
         		                
 	}
 	else if(left != NULL){
-			/*
-			new_size = *ptr + *left;
-			if(*((unsigned long *)*(left + 2) + 1) == (unsigned long)left){
-                                *((unsigned long *)*(left + 2) + 1) = *(left + 1);
-                        }
-			*left = new_size;
-			if(*(head + 1) == (unsigned long) left){
-				*(head + 1) = *(left + 1);
-			}	
-			*(head + 2) = (unsigned long)left;
-			if(head != left){
-				*(left + 1) = (unsigned long)head;
-			}
-			*(left + 2) = (unsigned long)(&head);	
-			head = left;
-			*/
+			
 			if((*(left+2) == &head) && (*(left+1) == NULL))
 			{
 				*left = *left + *ptr;
@@ -352,24 +297,7 @@ int memfree(unsigned long *ptr) {
 			}
 	}
 	else if(right != NULL){	
-			/*new_size = *ptr + *right;
-			if(*((unsigned long *)*(right + 2) + 1) == (unsigned long)right){
-				*((unsigned long *)*(right + 2) + 1) = *(right + 1);
-			}
-			*(ptr+2) = (unsigned long)(&head);
-			if(head != right){
-				*(ptr + 1) = (unsigned long)head;
-			}
-			else{
-				*(ptr + 1) = *(right + 1);
-			}
-			*ptr = new_size;
-			*(head + 2) = (unsigned long)ptr;
-			if(*(head + 1) == (unsigned long) right){
-				*(head + 1) = *(right + 1);
-			}
-			head = ptr;
-			*/
+			
 			
 			if((*(right+2) == &head) && (*(right+1) == NULL))
 			{
